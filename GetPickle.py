@@ -2,9 +2,10 @@ import os
 import numpy as np
 from PIL import Image
 import pickle
+import random
 #변환할 이미지 목록 불러오기
 
-ReShapeSize = 32
+ReShapeSize = 128
 
 
 image_path = ["" for i in range (4)]
@@ -31,22 +32,27 @@ for label in range(4):
 img_list_np = []
 for label in range(4):
     for i in img_list_jpg[label]:
+        label_table = [0 for i in range(4)]
+        label_table[label] = 1 
         img = Image.open(image_path[label] + i)        #Image형태로 열기
         img = img.resize((ReShapeSize, ReShapeSize))            #원하는 Size로 reshape
         img_array = np.array(img)               #np형태로 변환
 
         img_array = img_array.ravel()             #DNN을 위한 Data 1차원으로 변환
         #print(img_array.shape)
-        img_tuple = (img_array,label)
+        img_tuple = (img_array,label_table)
         
         img_list_np.append(img_tuple)           
         #print(i, " 추가 완료 - 구조:", img_array.shape) # 불러온 이미지의 차원 확인 (세로X가로X색)
         #print(img_array.T.shape) #축변경 (색X가로X세로)
 
+#img_list_np = random.shuffle(img_list_np)
 
-img_list_np = np.random.shuffle(img_list_np)
+print (img_list_np.__len__())
+#print (img_list_np)
+
 ## Save pickle
-with open("ForDebug_DNN_32.pickle","wb") as fw:
+with open("ForDebug_DNN_128.pickle","wb") as fw:
     pickle.dump(img_list_np, fw)
 
  
