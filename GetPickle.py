@@ -5,7 +5,7 @@ import pickle
 import random
 #변환할 이미지 목록 불러오기
 
-ReShapeSize = 128
+ReShapeSize = 32
 
 
 image_path = ["" for i in range (4)]
@@ -19,15 +19,21 @@ for label in range(4):
     img_list[label] = os.listdir(image_path[label]) #디렉토리 내 모든 파일 불러오기
 
 
+for label in range(4):
+    random.shuffle(img_list[label])
+    
 
+for label in range(4):
+    for idx in range(10):
+        print(img_list[label][idx])
+    print("********************************************************")
+    
 
 img_list_jpg = ["" for i in range (4)]
 for label in range(4):
     #### test 를 위한 data숫자 통제                       *여기*  이후 원본 데이터를 위해 삭제 
-    img_list_jpg[label] = [img for img in img_list[label][:160] if img.endswith(".jpg")] #지정된 확장자만 필터링
+    img_list_jpg[label] = [img for img in img_list[label][:400] if img.endswith(".jpg")] #지정된 확장자만 필터링
 
-#for label in range(4):
-#    print ("img_list_jpg: {}".format(img_list_jpg[label]))
 
 img_list_np = []
 for label in range(4):
@@ -46,13 +52,14 @@ for label in range(4):
         #print(i, " 추가 완료 - 구조:", img_array.shape) # 불러온 이미지의 차원 확인 (세로X가로X색)
         #print(img_array.T.shape) #축변경 (색X가로X세로)
 
-#img_list_np = random.shuffle(img_list_np)
+img_list_np = np.asarray(img_list_np)
+np.random.shuffle(img_list_np)
 
-print (img_list_np.__len__())
-#print (img_list_np)
+print (img_list_np.shape)
+print (img_list_np)
 
 ## Save pickle
-with open("ForDebug_DNN_128.pickle","wb") as fw:
+with open("ForDebug_DNN_32.pickle","wb") as fw:
     pickle.dump(img_list_np, fw)
 
  
