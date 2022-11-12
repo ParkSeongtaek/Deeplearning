@@ -3,10 +3,18 @@ import numpy as np
 import pandas as pd
 
 from two_layer_net import TwoLayerNet
+# 하이퍼파라미터
+iters_num = 5000 # 반복 횟수를 적절히 설정한다.
+train_size = 1000  # 640 장 중 600 장을 train 으로 사용
+data_num = 1400
+batch_size = 40  # 미니배치 크기 -> 40 장
+learning_rate = 0.1
+RGB =3
+PIXEL = 32
+HIDDEN_SIZE =50
+OUTPUT_SIZE = 4
 
-data_num = 640
-train_num = 600
-pickle_name = "ForDebug_DNN_32.pickle"
+pickle_name = "ForDebug_DNN_{}.pickle".format(PIXEL)
 
 with open(pickle_name,"rb") as fr:
     data = pickle.load(fr)
@@ -25,18 +33,13 @@ label = np.array(label)
 # print(data)
 # print(data.shape)
 # print(label.shape)
-x_train = data[:train_num]
-t_train = label[:train_num]
-x_test = data[train_num:]
-t_test = label[train_num:]
+x_train = data[:train_size]
+t_train = label[:train_size]
+x_test = data[train_size:]
+t_test = label[train_size:]
 
-network = TwoLayerNet(input_size=3 * 32 * 32, hidden_size=50, output_size=4)
+network = TwoLayerNet(input_size = RGB * PIXEL * PIXEL, hidden_size = HIDDEN_SIZE, output_size = OUTPUT_SIZE)
 
-# 하이퍼파라미터
-iters_num = 10000  # 반복 횟수를 적절히 설정한다.
-train_size = 600  # 640 장 중 600 장을 train 으로 사용
-batch_size = 40  # 미니배치 크기 -> 40 장
-learning_rate = 0.1
 
 train_loss_list = []
 train_acc_list = []
