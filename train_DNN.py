@@ -1,21 +1,21 @@
 import pickle
 import numpy as np
 import pandas as pd
-
+import matplotlib.pyplot as plt
 from two_layer_net import TwoLayerNet
 # 하이퍼파라미터
-iters_num = 5000 # 반복 횟수를 적절히 설정한다.
-train_size = 1000  # 640 장 중 600 장을 train 으로 사용
-data_num = 1400
+iters_num = 20000 # 반복 횟수를 적절히 설정한다.
+train_size = 40000  # 640 장 중 600 장을 train 으로 사용
+data_num = 45000
 batch_size = 40  # 미니배치 크기 -> 40 장
 learning_rate = 0.1
 RGB =3
 PIXEL = 32
 HIDDEN_SIZE =50
-OUTPUT_SIZE = 4
+OUTPUT_SIZE = 10
 
-pickle_name = "ForDebug_DNN_{}.pickle".format(PIXEL)
-
+#pickle_name = "ForDebug_DNN_{}.pickle".format(PIXEL)
+pickle_name = "CIRFAR_10_DNN_32.pickle"
 with open(pickle_name,"rb") as fr:
     data = pickle.load(fr)
 
@@ -47,7 +47,7 @@ test_acc_list = []
 
 # 1에폭당 반복 수
 iter_per_epoch = max(train_size / batch_size, 1)
-
+idx = 0
 for i in range(iters_num):
 	# 미니배치 획득
 	batch_mask = np.random.choice(train_size, batch_size)
@@ -72,4 +72,10 @@ for i in range(iters_num):
 		test_acc = network.accuracy(x_test, t_test)
 		train_acc_list.append(train_acc)
 		test_acc_list.append(test_acc)
-		print("train acc, test acc | " + str(train_acc) + ", " + str(test_acc))
+		print(str(idx) +"train acc, test acc | " + str(train_acc) + ", " + str(test_acc))
+  
+print(train_acc_list.__len__())
+print(test_acc_list.__len__())
+
+plt.plot(train_acc_list, 'r--', test_acc_list, 'bs')	
+plt.show()
