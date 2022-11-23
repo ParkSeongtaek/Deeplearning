@@ -83,7 +83,7 @@ plt.title(title) #그래프에 제목 넣기
 
 
 train_acc_list_title = 'train_acc_list' + title +'.pickle'
-train_acc_list_title = 'test_acc_list' + title +'.pickle'
+test_acc_list_title = 'test_acc_list' + title +'.pickle'
 
 # save
 with open(train_acc_list_title , 'wb') as fw:
@@ -91,7 +91,7 @@ with open(train_acc_list_title , 'wb') as fw:
     
 
 # save
-with open(train_acc_list_title, 'wb') as fw:
+with open(test_acc_list_title, 'wb') as fw:
     pickle.dump(test_acc_list, fw)
 
     
