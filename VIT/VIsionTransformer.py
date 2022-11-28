@@ -41,10 +41,10 @@ channel = 3
 patch_size = 4
 
 d_model = 128
-#n_layers = 6
-#nhead = 4
-n_layers = 12
-nhead = 8
+n_layers = 6
+nhead = 4
+#n_layers = 12
+#nhead = 8
 
 
 
@@ -52,8 +52,8 @@ ff_dim = 1024
 dropout_ratio = 0.2
 output_dim = 10
 
-num_epochs = 40
-learning_rate = 0.001
+num_epochs = 150
+learning_rate = 0.01
 resize = 32
 
 train_acc_list=[]
@@ -554,5 +554,3 @@ for idx in range (min(len(test_data),10)) :
   _ = ax1.imshow(mask.squeeze())
   
   plt.show()
-
-  '''

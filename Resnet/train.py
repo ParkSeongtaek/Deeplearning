@@ -49,7 +49,7 @@ model = ResNet50()
 # ResNet18, ResNet34, ResNet50, ResNet101, ResNet152 중에 택일하여 사용
 model.apply(init_weights)
 model = model.to(device)
-learning_rate = 0.001
+learning_rate = 0.01
 num_epoch = 150
 model_name = 'model.pth'
 
@@ -130,8 +130,8 @@ def Train() :
                 print("Model Saved!")
 
 
-train_acc_list_title = 'train_acc_Resnet.pickle'
-test_acc_list_title = 'test_acc_Resnet.pickle'
+train_acc_list_title = 'train_acc_Resnet_re_0.01.pickle'
+test_acc_list_title = 'test_acc_Resnet_re_0.01.pickle'
 if __name__ == '__main__':   # 중복 방지를 위한 사용
     freeze_support()         # 윈도우에서 파이썬이 자원을 효율적으로 사용하게 만들어준다.
 
