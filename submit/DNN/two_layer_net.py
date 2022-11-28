@@ -1,4 +1,3 @@
-# coding: utf-8
 import sys, os
 import numpy as np
 sys.path.append(os.pardir)  # 부모 디렉터리의 파일을 가져올 수 있도록 설정
