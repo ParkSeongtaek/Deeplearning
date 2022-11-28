@@ -10,18 +10,7 @@ from common.gradient import numerical_gradient
 
 class SimpleConvNet:
     """단순한 합성곱 신경망
-    
     conv - relu - pool - affine - relu - affine - softmax
-    
-    Parameters
-    ----------
-    input_size : 입력 크기（MNIST의 경우엔 784）
-    hidden_size_list : 각 은닉층의 뉴런 수를 담은 리스트（e.g. [100, 100, 100]）
-    output_size : 출력 크기（MNIST의 경우엔 10）
-    activation : 활성화 함수 - 'relu' 혹은 'sigmoid'
-    weight_init_std : 가중치의 표준편차 지정（e.g. 0.01）
-        'relu'나 'he'로 지정하면 'He 초깃값'으로 설정
-        'sigmoid'나 'xavier'로 지정하면 'Xavier 초깃값'으로 설정
     """
     def __init__(self, input_dim=(3, 32, 32), 
                  conv_param={'filter_num':30, 'filter_size':5, 'pad':0, 'stride':1},
@@ -65,13 +54,6 @@ class SimpleConvNet:
         return x
 
     def loss(self, x, t):
-        """손실 함수를 구한다.
-
-        Parameters
-        ----------
-        x : 입력 데이터
-        t : 정답 레이블
-        """
         y = self.predict(x)
         return self.last_layer.forward(y, t)
 
@@ -90,19 +72,6 @@ class SimpleConvNet:
         return acc / x.shape[0]
 
     def numerical_gradient(self, x, t):
-        """기울기를 구한다（수치미분）.
-
-        Parameters
-        ----------
-        x : 입력 데이터
-        t : 정답 레이블
-
-        Returns
-        -------
-        각 층의 기울기를 담은 사전(dictionary) 변수
-            grads['W1']、grads['W2']、... 각 층의 가중치
-            grads['b1']、grads['b2']、... 각 층의 편향
-        """
         loss_w = lambda w: self.loss(x, t)
 
         grads = {}
@@ -113,19 +82,6 @@ class SimpleConvNet:
         return grads
 
     def gradient(self, x, t):
-        """기울기를 구한다(오차역전파법).
-
-        Parameters
-        ----------
-        x : 입력 데이터
-        t : 정답 레이블
-
-        Returns
-        -------
-        각 층의 기울기를 담은 사전(dictionary) 변수
-            grads['W1']、grads['W2']、... 각 층의 가중치
-            grads['b1']、grads['b2']、... 각 층의 편향
-        """
         # forward
         self.loss(x, t)
 
@@ -137,8 +93,6 @@ class SimpleConvNet:
         layers.reverse()
         for layer in layers:
             dout = layer.backward(dout)
-
-        # 결과 저장
         grads = {}
         grads['W1'], grads['b1'] = self.layers['Conv1'].dW, self.layers['Conv1'].db
         grads['W2'], grads['b2'] = self.layers['Affine1'].dW, self.layers['Affine1'].db
